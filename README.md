@@ -111,9 +111,19 @@ Then copy the example config and fill in your shop:
 
 ```bash
 cp config.example.json config.json
+cp STATUS.example.md STATUS.md
 ```
 
-`config.json` is gitignored. Your shop's numbers never go near this repo.
+`config.json` is your shop's settings. `STATUS.md` is your running log — what
+you filed each week, what surprised you, and what your coach has decided.
+
+⛔ **Both are gitignored, and both must stay that way.** They will hold your
+real figures and your bank balances. If you fork this repo, those gitignore
+lines are the only thing between a routine `git push` and publishing your
+shop's finances.
+
+Keeping the log is the part people skip and then regret. Every trap documented
+in this repo came out of one.
 
 ### Credentials
 
@@ -162,6 +172,7 @@ is a separate step you drive with Claude, using
 | [`FIELD-MAP.md`](FIELD-MAP.md) | The rule book. What belongs in each CPTS field, what is excluded, and why. |
 | [`CPTS-FORM.md`](CPTS-FORM.md) | How to drive the form reliably, and every trap in it. |
 | [`config.example.json`](config.example.json) | Copy to `config.json` and fill in. |
+| [`STATUS.example.md`](STATUS.example.md) | Copy to `STATUS.md`. Your running log — gitignored, and it must stay that way. |
 | `scripts/pull-week.js` | The gatherer. |
 | `scripts/lib/tekmetric.js` | Minimal read-only Tekmetric API client. |
 | `scripts/lib/payroll-*.js` | Payroll adapters. |

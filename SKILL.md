@@ -8,10 +8,13 @@ description: Gathers a week of auto repair shop performance data and stages it f
 Stages one week of numbers for the **ATI Client Performance Tracking System**
 (`https://cpts2.autotraining.net/`) and files them.
 
-**Read these two before changing any calculation:**
+**Read these three before changing any calculation:**
 
 - `FIELD-MAP.md` — what belongs in each field, what is excluded, and why
 - `CPTS-FORM.md` — how to drive the form, and every trap in it
+- `STATUS.md` — this shop's running log: what was filed, what changed, what
+  broke, and what the owner's coach has already decided. **Open it first every
+  session.** If it does not exist yet, copy `STATUS.example.md` to `STATUS.md`.
 
 Shop-specific settings live in `config.json` (copy `config.example.json`).
 **Never hardcode a shop's id, employee names, or account numbers into a script.**
@@ -91,6 +94,9 @@ block showing its work.
    not as $0.00.
 9. If the week had tire sales **or any alignments**, file the Tires entry too and
    verify it the same way.
+10. **Update `STATUS.md`** — the saved record ids, anything that surprised you,
+    and any flag worth the owner's attention. Do this in the same turn the week
+    lands, not at the end of a session that may never reach its end.
 
 ---
 
@@ -132,6 +138,31 @@ Reimbursement · Freight · Royalty %
 
 Tech T&B Load · SMgr T&B Load · Labor Rate · Fixed Cost · Capacity. The owner
 maintains these in the portal; they change when the owner changes them.
+
+---
+
+## Keep a log — `STATUS.md`
+
+**Every trap in `CPTS-FORM.md` and `FIELD-MAP.md` came out of a log like this**
+at the shop that built this skill. Somebody filed a week, something was wrong,
+and they wrote down what and why. That is the only reason those documents are
+worth anything.
+
+Without a log, you start from zero every week and re-learn the same lessons.
+
+**Start it:** copy `STATUS.example.md` to `STATUS.md`. The template has the
+sections that turned out to matter — weeks filed with their record ids, the
+values that must be carried forward by hand, decisions the owner's coach has
+made, open questions, and what went wrong.
+
+**Write the reason, not just the number.** "Car count 11" is data. "Car count
+went 8 to 11 because four ROs posted after we staged it" is a lesson.
+
+⛔ **`STATUS.md` is gitignored and must stay that way.** It will hold the
+owner's bank balances, their debt and their real weekly figures. If this repo
+was forked, that gitignore line is the only thing standing between a routine
+`git push` and publishing a shop's finances. **Never commit it, never remove
+that line, and never paste its contents anywhere public.**
 
 ---
 

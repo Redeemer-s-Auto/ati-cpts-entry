@@ -1,6 +1,13 @@
 # Your shop's settings. Never commit these.
 config.json
 
+# YOUR RUNNING LOG. STATUS.md holds your real weekly figures, your bank
+# balances, your debt and your own notes. It is the same shape of private data
+# as config.json. If you fork this repo, this line is what stops you publishing
+# your shop's finances by accident. Do not remove it.
+STATUS.md
+STATUS-*.md
+
 # Credentials. These should live OUTSIDE the repo entirely, but block them here
 # too in case someone puts them in by mistake.
 .env
