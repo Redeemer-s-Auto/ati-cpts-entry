@@ -1,0 +1,24 @@
+# Your shop's settings. Never commit these.
+config.json
+
+# Credentials. These should live OUTSIDE the repo entirely, but block them here
+# too in case someone puts them in by mistake.
+.env
+*.env
+.cpts-secrets/
+**/token.txt
+**/*secret*
+**/*credential*
+
+# API audit logs contain your shop id and request history.
+logs/
+*.jsonl
+
+# Anything staged for a real week.
+week-*.json
+week-*.txt
+scratch/
+
+node_modules/
+.DS_Store
+Thumbs.db

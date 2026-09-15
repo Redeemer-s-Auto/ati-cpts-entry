@@ -1,0 +1,98 @@
+{
+  "_README": "Copy this file to config.json and fill it in. config.json is gitignored - your shop's numbers never enter this repo. Keys beginning with _ are comments and are ignored.",
+
+  "shop": {
+    "name": "Your Shop Name",
+    "atiAccountNumber": "000000",
+    "timeZone": "America/Chicago",
+    "_timeZone": "An IANA zone. The UTC offset is derived from this so daylight saving cannot silently shift your week.",
+    "serviceBays": 6,
+    "_serviceBays": "Informational only - you type this into the form yourself. It changes more often than you expect."
+  },
+
+  "sms": {
+    "provider": "tekmetric",
+    "_provider": "tekmetric | manual. For any other management system, ask Claude to write a reader that returns the same shape.",
+
+    "tekmetric": {
+      "shopId": 0,
+      "_shopId": "Your numeric Tekmetric shop id. It appears in the shop.tekmetric.com URL: /admin/shop/<shopId>/...",
+      "envPath": "../.cpts-secrets/.env",
+      "_envPath": "Path to a file holding TEKMETRIC_CLIENT_ID and TEKMETRIC_CLIENT_SECRET. Keep it OUTSIDE this repo. Relative paths resolve from the repo root.",
+      "environment": "production"
+    }
+  },
+
+  "carCount": {
+    "excludeServiceWriterIds": [],
+    "_excludeServiceWriterIds": "Employee ids whose ROs are not customer cars - your 'Internal RO' and 'Employee Vehicles' pseudo-writers. MATCH ON ID, NEVER ON NAME: display names get renamed, ids do not. Find them by listing your employees in the API or by checking an internal RO. NOTE: the owner's own ROs DO count as cars - only their wages are excluded."
+  },
+
+  "inspection": {
+    "jobNamePattern": "multi.?point",
+    "_jobNamePattern": "Case-insensitive regex matching your canned inspection job. Counted as distinct ROs carrying a COMPLETED one, not as a count of jobs."
+  },
+
+  "supplies": {
+    "feeNamePattern": "suppl|hazmat",
+    "_feeNamePattern": "Case-insensitive regex for fees that count as Supplies/Hazmat Sales. Deliberately narrow - it must NOT sweep in card processing, tips, roadside, rentals or protection plans.",
+
+    "cost": {
+      "mode": "flat",
+      "_mode": "flat | report. 'flat' enters flatAmount. 'report' is NOT implemented on purpose - see FIELD-MAP.md. Your SMS report's Supplies Cost is a fixed percentage of supplies sales, which is a suggested markup, not a measured expense.",
+      "flatAmount": 100.0
+    }
+  },
+
+  "discounts": {
+    "mode": "netted",
+    "_mode": "netted | bundled. ASK YOUR COACH WHICH YOU WERE TAUGHT. 'netted' files CPTS Discounts as $0.00 and subtracts each discount from the sales line it came off. 'bundled' puts the whole total in the Discounts field and enters sales gross. Both are legitimate.",
+    "offLaborPattern": "off\\s+labor",
+    "_offLaborPattern": "Case-insensitive regex. A discount whose NAME matches this goes entirely to Labor. Covers 'New Client - 10% Off Labor', 'Senior Discount - 15% Off Labor' and so on. Adjust to match how your advisors name discounts."
+  },
+
+  "tires": {
+    "partTypeCode": "TIRE",
+    "_partTypeCode": "The part type your SMS assigns to tires. Rims are usually typed PART and stay in Mechanical Parts Sales.",
+    "protectionPlanPattern": "tire protection plan",
+    "_protectionPlanPattern": "Fee name for the tire protection plan. Counted PER TIRE on the job, not per fee line.",
+    "alignmentPattern": "align",
+    "_alignmentPattern": "Matched against SUBLET names, authorized only. Alignments usually come through as sublets, not jobs.",
+    "tpmsPattern": "\\bTPMS\\b",
+    "_tpmsPattern": "Match TPMS explicitly. NEVER match the bare word 'sensor' - it hits things like a DPF Differential Pressure Sensor and invents a tire sale."
+  },
+
+  "payroll": {
+    "source": "manual",
+    "_source": "manual | notion | quickbooks",
+
+    "manual": {
+      "_README": "Read these four off your payroll report and put them here each week, or leave them null and the script will just print a dash for you to fill in by hand.",
+      "techWages": null,
+      "smgrWages": null,
+      "techCount": null,
+      "clockHours": null
+    },
+
+    "notion": {
+      "_README": "An internal integration token and two data source ids. A 404 here almost always means wrong token, wrong API version, or /databases/ instead of /data_sources/ - not missing permission.",
+      "tokenPath": "../.cpts-secrets/notion-token.txt",
+      "apiVersion": "2025-09-03",
+      "weeklyPayrollDataSourceId": "",
+      "techPaySummaryDataSourceId": "",
+      "payPeriodProperty": "Pay Period",
+      "_payPeriodFormat": "How your Pay Period select values are labelled. {mon} and {sun} are the Monday and Sunday of the period, {yy} the 2-digit year. Notion pay periods often run Mon-Sun while ATI weeks run Sun-Sat; this maps between them.",
+      "payPeriodFormat": "{mon}-{sun}/{yy}",
+      "workerTypeProperty": "Worker Type",
+      "flagTechWorkerType": "Flag Tech",
+      "serviceWriterNames": [],
+      "_serviceWriterNames": "First names of the service advisors whose wages belong in SMgr./Writer Wages.",
+      "alwaysExcludePattern": "",
+      "_alwaysExcludePattern": "Case-insensitive regex of names NEVER counted in wages - the owner, and office or admin staff. ATI counts owner pay as a fixed expense, so including it double-counts."
+    },
+
+    "quickbooks": {
+      "_README": "Not implemented. See scripts/lib/payroll-quickbooks.js - the shape is laid out. If you run QuickBooks or QBO Time for payroll, ask Claude to finish it against your account."
+    }
+  }
+}
