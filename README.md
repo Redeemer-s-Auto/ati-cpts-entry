@@ -60,10 +60,18 @@ Tekmetric reader, because that is what this shop runs.
 |---|---|
 | Tekmetric API credentials | Works out of the box. Set `tekmetricShopId` in your config. |
 | A different SMS (Shop-Ware, Mitchell, Protractor, R.O. Writer…) | Ask Claude to write a reader for it. The rest of the script does not care where the numbers came from. |
-| No API at all | Use `"source": "manual"` and read the figures off your own reports. You still get the rule book, the allocation math and the form automation. |
+| No API at all | **The script will not run.** You still get the rule book, the form automation and every trap documented here — which is most of the value. Read your weekly figures off your own reports and file them with Claude using [`CPTS-FORM.md`](CPTS-FORM.md). |
 
-**Payroll is pluggable.** Tech wages, service writer wages, tech count and clock
-hours come from an adapter you choose in the config:
+⚠️ **Be clear on what needs Tekmetric and what does not.** `scripts/pull-week.js`
+ships exactly one management-system reader, and it is Tekmetric. There is no
+built-in "manual" mode for the sales side — if the script cannot read your ROs it
+stops and tells you so. That is deliberate: if you are typing parts sales and labor
+sales in by hand, the script has nothing left to work out for you. What you want in
+that case is [`FIELD-MAP.md`](FIELD-MAP.md) and [`CPTS-FORM.md`](CPTS-FORM.md), and
+those need no setup at all.
+
+**Payroll is a separate question, and it IS pluggable.** Tech wages, service writer
+wages, tech count and clock hours come from an adapter you choose in the config:
 
 | `payroll.source` | Status |
 |---|---|

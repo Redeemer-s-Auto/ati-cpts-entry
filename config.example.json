@@ -12,7 +12,7 @@
 
   "sms": {
     "provider": "tekmetric",
-    "_provider": "tekmetric | manual. For any other management system, ask Claude to write a reader that returns the same shape.",
+    "_provider": "tekmetric is the ONLY reader that ships. Any other value stops the script with an explanation - there is no built-in manual mode for the sales side. For another management system, ask Claude to write a reader that returns the same shape; nothing downstream cares where the repair orders came from.",
 
     "tekmetric": {
       "shopId": 0,

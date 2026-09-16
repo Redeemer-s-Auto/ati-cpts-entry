@@ -174,9 +174,12 @@ tracker. Neither is required.
 - **Different management system?** The reader is one module. Write a new one that
   returns the same shape. Nothing else in the script cares where the data came
   from.
-- **No API at all?** Set `payroll.source` to `manual` and read the figures off
-  your own reports. You still get the rule book, the discount math and the form
-  automation.
+- **No management-system API at all?** The script will not run, and it says so
+  rather than guessing. Use `FIELD-MAP.md` and `CPTS-FORM.md`, read the weekly
+  figures off the owner's own reports, and drive the form with Claude. That is
+  still most of the value.
+- **No PAYROLL API?** Different question, and it is handled: set
+  `payroll.source` to `manual`. The sales side still needs a reader.
 - **QuickBooks or QBO Time for payroll?** `scripts/lib/payroll-quickbooks.js` is a
   stub with the shape laid out. Finish it against the user's account.
 - **Coach teaches discounts differently?** Set `discounts.mode` to `bundled`.
