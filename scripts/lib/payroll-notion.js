@@ -141,7 +141,19 @@ async function load(config, sundayIso, repoRoot) {
     const name = propText(r.properties.Name);
     if (exclude && exclude.test(name)) continue;
     if (!writers.some((w) => name.toLowerCase().startsWith(String(w).toLowerCase()))) continue;
-    smgrWages += (propNum(r.properties['Gross Pay']) || 0)
+    const who = name.split('·')[0].trim();
+    const gross = propNum(r.properties['Gross Pay']);
+    if (gross == null) {
+      // A blank Gross Pay usually means the payroll run has not stamped the row
+      // yet, not that the person earned nothing. Stage the row's own pre-tax
+      // estimate (base + commission + tips) and say so, rather than printing a
+      // plausible-looking $0.00 that would file as "paid nothing".
+      const est = propNum(r.properties['Estimated Pre-Tax']) || 0;
+      smgrWages += est;
+      notes.push(`${who}: Gross Pay is BLANK - staged Estimated Pre-Tax ${usd(est)} instead. Confirm before filing.`);
+      continue;
+    }
+    smgrWages += gross
       + (propNum(r.properties['Actual Tips']) || 0)
       + (propNum(r.properties['Actual Commission']) || 0);
   }

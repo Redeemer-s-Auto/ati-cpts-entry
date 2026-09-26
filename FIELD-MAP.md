@@ -121,6 +121,12 @@ not a category. So you have to decide where each one belongs.
    Discount — 10% Off Labor", "Senior Discount — 15% Off Labor". Anything matching
    `/off labor/i` goes to **Labor**. Straightforward and by far the most common.
 
+   The same applies on the parts side: "$100 off Parts" matches `/off parts/i`
+   and goes to **Parts** in full. ⚠️ Give the script both patterns. A parts-only
+   discount with no parts pattern to match falls through to rule 3 and gets
+   pro-rated over parts, labor and supplies — which quietly takes money off
+   labor that never came off labor. Found the hard way on a $100 parts coupon.
+
 2. **A coupon that zeroes one job splits itself.** Watch for a discount whose
    amount **exactly equals one job's own parts total or labor total**.
 

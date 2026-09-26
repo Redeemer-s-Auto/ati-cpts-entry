@@ -48,7 +48,9 @@
     "mode": "netted",
     "_mode": "netted | bundled. ASK YOUR COACH WHICH YOU WERE TAUGHT. 'netted' files CPTS Discounts as $0.00 and subtracts each discount from the sales line it came off. 'bundled' puts the whole total in the Discounts field and enters sales gross. Both are legitimate.",
     "offLaborPattern": "off\\s+labor",
-    "_offLaborPattern": "Case-insensitive regex. A discount whose NAME matches this goes entirely to Labor. Covers 'New Client - 10% Off Labor', 'Senior Discount - 15% Off Labor' and so on. Adjust to match how your advisors name discounts."
+    "_offLaborPattern": "Case-insensitive regex. A discount whose NAME matches this goes entirely to Labor. Covers 'New Client - 10% Off Labor', 'Senior Discount - 15% Off Labor' and so on. Adjust to match how your advisors name discounts.",
+    "offPartsPattern": "off\\s+parts",
+    "_offPartsPattern": "Same idea for the parts side. A discount whose NAME matches this goes entirely to Parts - '$100 off Parts', '10% Off Parts'. Without it a parts-only discount gets pro-rated across parts, labor and supplies, which understates labor."
   },
 
   "tires": {

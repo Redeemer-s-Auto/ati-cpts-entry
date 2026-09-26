@@ -136,6 +136,7 @@ async function main() {
   const ALIGNMENT = rx(config.tires?.alignmentPattern || 'align');
   const TPMS = rx(config.tires?.tpmsPattern || '\\bTPMS\\b');
   const OFF_LABOR = rx(config.discounts?.offLaborPattern || 'off\\s+labor');
+  const OFF_PARTS = rx(config.discounts?.offPartsPattern || 'off\\s+parts');
 
   // Supplies/hazmat fees ONLY. Job-level fees count only on AUTHORIZED jobs -
   // unsold estimate lines carry fees too, and they can be enormous.
@@ -264,10 +265,17 @@ async function main() {
           continue;
         }
 
-        // Rule 1: the name states the category.
+        // Rule 1: the name states the category. Check both sides - a
+        // "$100 off Parts" line that only has a labor pattern to match against
+        // falls through to rule 3 and gets pro-rated, which is wrong.
         if (OFF_LABOR.test(name)) {
           disc.labor += amt;
           discLines.push(`LABOR  ${tag}   (name matches the off-labor pattern)`);
+          continue;
+        }
+        if (OFF_PARTS.test(name)) {
+          disc.parts += amt;
+          discLines.push(`PARTS  ${tag}   (name matches the off-parts pattern)`);
           continue;
         }
 
